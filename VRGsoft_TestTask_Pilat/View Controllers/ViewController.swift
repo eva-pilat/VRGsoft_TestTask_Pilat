@@ -9,11 +9,14 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MainCell", for: indexPath) as! NewsTableViewCell
+        //let newsArticle = news[indexPath.row]
+        //cell.configure(with: newsArticle, delegate: self)
+        return cell
     }
     
 

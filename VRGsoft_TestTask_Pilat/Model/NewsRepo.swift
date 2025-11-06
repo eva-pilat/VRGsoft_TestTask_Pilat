@@ -6,17 +6,19 @@
 //
 import Foundation
 import CoreData
+import UIKit
 
 final class NewsRepo: NewsService {
     
     static let shared = NewsRepo()
     private let networkLayer: NetworkService
     private let dbLayer: DBService
-    private let context: NSManagedObjectContext
     
     private init() {
         self.networkLayer = AlamofireNetworkService()
-        self.dbLayer = CoreDataDBService(context: context)
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        self.dbLayer = CoreDataDBService(context: appDelegate.persistentContainer.viewContext)
     }
     
     func getNews(page: Int, search: String?) async throws -> [Model.NewsArticle] {
@@ -34,13 +36,16 @@ final class NewsRepo: NewsService {
         let request = NetworkRequest(url: url, parameters: parameters)
         
         let response: NewsAPIResponse = try await networkLayer.request(request)
+        
+        var favorites: Set<String> = try await dbLayer.getFavoritesId()
      
         return response.articles.map { apiArticle in
+            let isFav = favorites.contains(apiArticle.url)
             return Model.NewsArticle(id: apiArticle.url,
                                      title: apiArticle.title,
                                      text: apiArticle.description ?? "",
                                      imageURL: URL(string: apiArticle.urlToImage ?? ""),
-                                     isFavorite: false,
+                                     isFavorite: isFav,
                                      sourceName: apiArticle.source.name)
         }
     }

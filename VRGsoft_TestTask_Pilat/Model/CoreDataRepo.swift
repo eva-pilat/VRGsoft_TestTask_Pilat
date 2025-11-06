@@ -11,7 +11,7 @@ protocol DBService {
     func saveArticle(article: Model.NewsArticle) async throws
     func deleteArticle(id: String) async throws
     func fetchArticles() async throws -> [Model.NewsArticle]
-    func isArticleFavorite(id: String) async throws -> Bool
+    func getFavoritesId() async throws -> Set<String>
 }
 
 final class CoreDataDBService: DBService {
@@ -23,27 +23,63 @@ final class CoreDataDBService: DBService {
     }
     
     func saveArticle(article: Model.NewsArticle) async throws {
-        let managed = NewsArticle(context: context)
-        
-        managed.idURL = article.id
-        managed.title = article.title
-        managed.text = article.text
-        managed.imageURL = article.imageURL?.absoluteString
-        managed.sourceName = article.sourceName
-        managed.isFavorite = true
-        
-        try context.save()
+        try await context.perform {
+            let managed = NewsArticle(context: self.context)
+            
+            managed.idURL = article.id
+            managed.title = article.title
+            managed.text = article.text
+            managed.imageURL = article.imageURL?.absoluteString
+            managed.sourceName = article.sourceName
+            managed.isFavorite = true
+            
+            try self.context.save()
+        }
     }
     
     func deleteArticle(id: String) async throws {
-        
+        try await context.perform {
+            let fetchRequest: NSFetchRequest<NewsArticle> = NewsArticle.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "idURL == %@", id)
+            
+            do {
+                let results = try self.context.fetch(fetchRequest)
+                if let articleToDelete = results.first {
+                    self.context.delete(articleToDelete)
+                    try self.context.save()
+                }
+            } catch {
+                throw error
+            }
+        }
     }
     
     func fetchArticles() async throws -> [Model.NewsArticle] {
-        
+        return try await context.perform {
+            let request: NSFetchRequest<NewsArticle> = NewsArticle.fetchRequest()
+            request.predicate = NSPredicate(format: "isFavorite == true")
+            let results = try self.context.fetch(request)
+            return results.map { article in
+                Model.NewsArticle(id: article.idURL ?? "",
+                                  title: article.title ?? "Без назви",
+                                  text: article.text ?? "",
+                                  imageURL: URL(string: article.imageURL ?? ""),
+                                  isFavorite: true, // ← важливо!
+                                  sourceName: article.sourceName ?? "Невідоме джерело")
+            }
+        }
     }
     
-    func isArticleFavorite(id: String) async throws -> Bool{
-        
+    func getFavoritesId() async throws -> Set<String> {
+        return try await context.perform {
+            let request: NSFetchRequest<NewsArticle> = NewsArticle.fetchRequest()
+            request.predicate = NSPredicate(format: "isFavorite == true")
+            request.propertiesToFetch = ["idURL"]
+            request.resultType = .dictionaryResultType
+            let results = try self.context.fetch(request) as? [[String: String]] ?? []
+            let ids = results.compactMap { $0["idURL"] }
+            return Set(ids)
+        }
     }
 }
+
