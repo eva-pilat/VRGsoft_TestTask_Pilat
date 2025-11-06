@@ -26,13 +26,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 news[index] = updatedArticle
                 await MainActor.run {
                     let indexPath = IndexPath(row: index, section: 0)
-                    if let cell = tableView.cellForRow(at: indexPath) as? NewsTableViewCell {
-                        cell.configure(with: updatedArticle, delegate: self)
-                    } else {
-                        tableView.reloadRows(at: [indexPath], with: .none)
-                    }
+                    tableView.reloadRows(at: [indexPath], with: .none)
                 }
             }
+            
+            NotificationCenter.default.post(name: .favoritesDidChange, object: nil)
         }
     }
     
@@ -53,6 +51,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     @IBAction func onSearchButtonTapped(_ sender: Any) {
+        guard let query = searchField.text, !query.isEmpty else { return }
+        Task {
+            do {
+                let results = try await NewsRepo.shared.getNews(page: 1, search: query)
+                self.news = results
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            } catch {
+                print("Помилка: \(error)")
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Помилка", message: error.localizedDescription, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true)
+                }
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -62,7 +77,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 160
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(refreshNews),
+            name: .favoritesDidChange,
+            object: nil
+        )
         // Do any additional setup after loading the view.
+    }
+    
+    @objc private func refreshNews() {
+        Task {
+            do {
+                self.news = try await NewsRepo.shared.getNews(page: 1, search: nil)
+                await MainActor.run { self.tableView.reloadData() }
+            } catch {
+                print("Помилка: \(error)")
+            }
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {

@@ -57,7 +57,7 @@ class NewsTableViewCell: UITableViewCell {
     
     @IBAction func onSaveButtonTapped(_ sender: Any) {
         guard let article else {return}
-        self.article?.isFavorite.toggle()
+        //self.article?.isFavorite.toggle()
         delegate?.didToggleFavorite(article: article)
     }
     

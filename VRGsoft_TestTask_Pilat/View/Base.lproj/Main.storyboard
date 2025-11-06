@@ -12,13 +12,13 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="VRGsoft_TestTask_Pilat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewsVC" id="BYZ-38-t0r" customClass="ViewController" customModule="VRGsoft_TestTask_Pilat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="d0F-HW-uAU">
-                                <rect key="frame" x="16" y="144" width="361" height="552"/>
+                                <rect key="frame" x="16" y="144" width="361" height="624"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewsCell" id="tsn-Vl-oX3" customClass="NewsTableViewCell" customModule="VRGsoft_TestTask_Pilat" customModuleProvider="target">
@@ -86,18 +86,6 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eSw-e3-Gq1">
-                                <rect key="frame" x="0.0" y="712" width="393" height="83"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="393" id="iGO-xq-8vY"/>
-                                </constraints>
-                                <items>
-                                    <tabBarItem id="QPJ-BI-tFm"/>
-                                    <tabBarItem id="OXV-f9-2mx"/>
-                                </items>
-                                <tabBarAppearance key="standardAppearance"/>
-                            </tabBar>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RVC-5i-eWa">
                                 <rect key="frame" x="16" y="92" width="303" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -118,16 +106,14 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="eSw-e3-Gq1" secondAttribute="bottom" constant="-11" id="5Gb-1r-bRq"/>
-                            <constraint firstItem="eSw-e3-Gq1" firstAttribute="centerX" secondItem="d0F-HW-uAU" secondAttribute="centerX" id="9Gr-t3-oXZ"/>
                             <constraint firstItem="3f7-na-ANt" firstAttribute="top" secondItem="RVC-5i-eWa" secondAttribute="top" id="DfF-0U-Ds5"/>
-                            <constraint firstItem="eSw-e3-Gq1" firstAttribute="top" secondItem="d0F-HW-uAU" secondAttribute="bottom" constant="16" id="Gsb-OE-jac"/>
                             <constraint firstItem="RVC-5i-eWa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Jlq-Ws-RBD"/>
                             <constraint firstItem="d0F-HW-uAU" firstAttribute="top" secondItem="3f7-na-ANt" secondAttribute="bottom" constant="16" id="PSN-mg-uhQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3f7-na-ANt" secondAttribute="trailing" constant="16" id="SrA-5j-Knk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="d0F-HW-uAU" secondAttribute="trailing" constant="16" id="TB9-yv-WaO"/>
                             <constraint firstItem="3f7-na-ANt" firstAttribute="centerY" secondItem="RVC-5i-eWa" secondAttribute="centerY" id="VJn-Xc-M3a"/>
                             <constraint firstItem="3f7-na-ANt" firstAttribute="leading" secondItem="RVC-5i-eWa" secondAttribute="trailing" constant="8" id="dPb-mz-dBn"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="d0F-HW-uAU" secondAttribute="bottom" constant="16" id="feH-UC-EMn"/>
                             <constraint firstItem="RVC-5i-eWa" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="92" id="hmQ-sw-R8J"/>
                             <constraint firstItem="d0F-HW-uAU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="tZ9-Yg-61U"/>
                         </constraints>
@@ -144,13 +130,13 @@
         <!--Categiries View Controller-->
         <scene sceneID="kiS-x7-8AW">
             <objects>
-                <viewController id="jUK-py-a7e" customClass="CategiriesViewController" customModule="VRGsoft_TestTask_Pilat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CategoriesVC" id="jUK-py-a7e" customClass="CategiriesViewController" customModule="VRGsoft_TestTask_Pilat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c9V-3S-rv5">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1m3-hQ-hEU">
-                                <rect key="frame" x="16" y="150" width="361" height="547"/>
+                                <rect key="frame" x="16" y="150" width="361" height="618"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewsCell" id="Ncc-JM-jFk" customClass="NewsTableViewCell" customModule="VRGsoft_TestTask_Pilat" customModuleProvider="target">
@@ -173,6 +159,9 @@
                                                     <rect key="frame" x="310" y="4" width="47" height="35"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" image="bookmark" catalog="system" title=""/>
+                                                    <connections>
+                                                        <action selector="onSaveButtonTapped:" destination="Ncc-JM-jFk" eventType="touchUpInside" id="5Sz-Fe-ZW1"/>
+                                                    </connections>
                                                 </button>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ibx-09-OsG">
                                                     <rect key="frame" x="16" y="31" width="300" height="1"/>
@@ -206,6 +195,12 @@
                                                 <constraint firstItem="aUD-Yg-HIp" firstAttribute="top" secondItem="dzc-GM-3Wt" secondAttribute="top" constant="4" id="zaa-P4-Fsm"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="articleImage" destination="iHO-u3-h1u" id="Dvu-Ki-7O6"/>
+                                            <outlet property="articleText" destination="ibx-09-OsG" id="hKy-eW-1od"/>
+                                            <outlet property="articleTitle" destination="iSc-wi-sC5" id="hgv-Ro-Je4"/>
+                                            <outlet property="saveButton" destination="aUD-Yg-HIp" id="KVv-yt-y4V"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -220,17 +215,6 @@
                                 </menu>
                                 <state key="normal" title="Button"/>
                             </button>
-                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4xc-QR-SID">
-                                <rect key="frame" x="0.0" y="713" width="393" height="83"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="393" id="oGx-Li-FSu"/>
-                                </constraints>
-                                <items>
-                                    <tabBarItem id="nAP-yi-PpX"/>
-                                    <tabBarItem id="hlr-Od-DeG"/>
-                                </items>
-                            </tabBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hDk-7b-PJ6"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -238,12 +222,10 @@
                             <constraint firstItem="hDk-7b-PJ6" firstAttribute="trailing" secondItem="1m3-hQ-hEU" secondAttribute="trailing" constant="16" id="7MP-To-O3D"/>
                             <constraint firstItem="1m3-hQ-hEU" firstAttribute="top" secondItem="FIX-RY-wiP" secondAttribute="bottom" constant="4" id="AlB-42-Pw0"/>
                             <constraint firstItem="FIX-RY-wiP" firstAttribute="leading" secondItem="hDk-7b-PJ6" secondAttribute="leading" constant="16" id="CFz-sV-Lpe"/>
-                            <constraint firstItem="4xc-QR-SID" firstAttribute="top" secondItem="1m3-hQ-hEU" secondAttribute="bottom" constant="16" id="H4G-cA-aGJ"/>
                             <constraint firstItem="1m3-hQ-hEU" firstAttribute="leading" secondItem="hDk-7b-PJ6" secondAttribute="leading" constant="16" id="KhC-lW-yox"/>
                             <constraint firstItem="hDk-7b-PJ6" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="FIX-RY-wiP" secondAttribute="trailing" symbolic="YES" id="UPu-K4-TeF"/>
                             <constraint firstItem="FIX-RY-wiP" firstAttribute="top" secondItem="c9V-3S-rv5" secondAttribute="top" constant="110" id="URk-nD-TkQ"/>
-                            <constraint firstItem="4xc-QR-SID" firstAttribute="centerX" secondItem="1m3-hQ-hEU" secondAttribute="centerX" id="Yaa-Ad-H2W"/>
-                            <constraint firstItem="hDk-7b-PJ6" firstAttribute="bottom" secondItem="4xc-QR-SID" secondAttribute="bottom" constant="-12" id="oyv-wY-caL"/>
+                            <constraint firstItem="hDk-7b-PJ6" firstAttribute="bottom" secondItem="1m3-hQ-hEU" secondAttribute="bottom" constant="16" id="n6y-GV-5Kg"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -254,13 +236,13 @@
         <!--Favorites View Controller-->
         <scene sceneID="GxT-tb-sXa">
             <objects>
-                <viewController id="f7d-tM-e0n" customClass="FavoritesViewController" customModule="VRGsoft_TestTask_Pilat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FavoritesVC" id="f7d-tM-e0n" customClass="FavoritesViewController" customModule="VRGsoft_TestTask_Pilat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QtG-eb-0ds">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="TcI-9p-wPB">
-                                <rect key="frame" x="16" y="73" width="361" height="624"/>
+                                <rect key="frame" x="16" y="73" width="361" height="695"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewsCell" id="qC8-mB-qCE" customClass="NewsTableViewCell" customModule="VRGsoft_TestTask_Pilat" customModuleProvider="target">
@@ -283,6 +265,9 @@
                                                     <rect key="frame" x="310" y="4" width="47" height="35"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" image="bookmark" catalog="system" title=""/>
+                                                    <connections>
+                                                        <action selector="onSaveButtonTapped:" destination="qC8-mB-qCE" eventType="touchUpInside" id="UO1-BT-FMj"/>
+                                                    </connections>
                                                 </button>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Cb7-r6-d2s">
                                                     <rect key="frame" x="16" y="31" width="300" height="1"/>
@@ -316,32 +301,28 @@
                                                 <constraint firstItem="fxg-M4-Xk7" firstAttribute="top" secondItem="cvC-wm-a2M" secondAttribute="top" constant="4" id="z9g-gE-3k0"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="articleImage" destination="Jht-WN-pt9" id="Mjo-iI-yeb"/>
+                                            <outlet property="articleText" destination="Cb7-r6-d2s" id="cID-aW-4MN"/>
+                                            <outlet property="articleTitle" destination="cU1-3z-gHX" id="mig-6q-ig0"/>
+                                            <outlet property="saveButton" destination="fxg-M4-Xk7" id="Rxj-u5-3ao"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2a3-aC-t1K">
-                                <rect key="frame" x="0.0" y="713" width="393" height="83"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="393" id="D0o-mI-1ED"/>
-                                </constraints>
-                                <items>
-                                    <tabBarItem id="cV2-Py-sE5"/>
-                                    <tabBarItem id="h7w-3j-0rh"/>
-                                </items>
-                            </tabBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="oQu-G2-rlv"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="TcI-9p-wPB" firstAttribute="leading" secondItem="oQu-G2-rlv" secondAttribute="leading" constant="16" id="3vc-jk-qHS"/>
                             <constraint firstItem="oQu-G2-rlv" firstAttribute="trailing" secondItem="TcI-9p-wPB" secondAttribute="trailing" constant="16" id="Dza-mm-s5w"/>
-                            <constraint firstItem="2a3-aC-t1K" firstAttribute="top" secondItem="TcI-9p-wPB" secondAttribute="bottom" constant="16" id="JyV-29-u1S"/>
-                            <constraint firstItem="oQu-G2-rlv" firstAttribute="bottom" secondItem="2a3-aC-t1K" secondAttribute="bottom" constant="-12" id="OQ2-8T-QJD"/>
-                            <constraint firstItem="2a3-aC-t1K" firstAttribute="centerX" secondItem="TcI-9p-wPB" secondAttribute="centerX" id="Qsy-0q-q3I"/>
                             <constraint firstItem="TcI-9p-wPB" firstAttribute="top" secondItem="QtG-eb-0ds" secondAttribute="top" constant="73" id="Xhv-3l-u9L"/>
+                            <constraint firstItem="oQu-G2-rlv" firstAttribute="bottom" secondItem="TcI-9p-wPB" secondAttribute="bottom" constant="16" id="hRU-yb-e8v"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="TcI-9p-wPB" id="dSH-v3-HRC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZZt-6K-ey2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
