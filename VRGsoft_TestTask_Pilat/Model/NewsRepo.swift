@@ -37,7 +37,7 @@ final class NewsRepo: NewsService {
         
         let response: NewsAPIResponse = try await networkLayer.request(request)
         
-        var favorites: Set<String> = try await dbLayer.getFavoritesId()
+        let favorites: Set<String> = try await dbLayer.getFavoritesId()
      
         return response.articles.map { apiArticle in
             let isFav = favorites.contains(apiArticle.url)
@@ -46,7 +46,7 @@ final class NewsRepo: NewsService {
                                      text: apiArticle.description ?? "",
                                      imageURL: URL(string: apiArticle.urlToImage ?? ""),
                                      isFavorite: isFav,
-                                     sourceName: apiArticle.source.name)
+                                     sourceName: apiArticle.source.name ?? "")
         }
     }
     
@@ -71,7 +71,7 @@ final class NewsRepo: NewsService {
                                      text: apiArticle.description ?? "",
                                      imageURL: URL(string: apiArticle.urlToImage ?? ""),
                                      isFavorite: false,
-                                     sourceName: apiArticle.source.name)
+                                     sourceName: apiArticle.source.name ?? "")
         }
     }
     
@@ -100,13 +100,13 @@ final class NewsRepo: NewsService {
         let description: String?
         let url: String
         let urlToImage: String?
-        let publishedAt: String
+        let publishedAt: String?
         let content: String?
     }
     
     private struct Source: Decodable {
         let id: String?
-        let name: String
+        let name: String?
     }
 }
 

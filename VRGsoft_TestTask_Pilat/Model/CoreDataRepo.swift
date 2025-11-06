@@ -75,9 +75,9 @@ final class CoreDataDBService: DBService {
             let request: NSFetchRequest<NewsArticle> = NewsArticle.fetchRequest()
             request.predicate = NSPredicate(format: "isFavorite == true")
             request.propertiesToFetch = ["idURL"]
-            request.resultType = .dictionaryResultType
-            let results = try self.context.fetch(request) as? [[String: String]] ?? []
-            let ids = results.compactMap { $0["idURL"] }
+            request.resultType = .managedObjectResultType
+            let results = try self.context.fetch(request)
+            let ids = results.compactMap { $0.idURL }
             return Set(ids)
         }
     }
