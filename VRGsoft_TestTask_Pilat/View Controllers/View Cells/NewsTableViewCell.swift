@@ -9,6 +9,14 @@ import UIKit
 
 class NewsTableViewCell: UITableViewCell {
 
+    @IBOutlet private weak var articleTitle: UILabel!
+    @IBOutlet private weak var saveButton: UIButton!
+    @IBOutlet weak var articleText: UITextView!
+    @IBOutlet weak var articleImage: UIImageView!
+    
+    @IBAction func onSaveButtonTapped(_ sender: Any) {
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

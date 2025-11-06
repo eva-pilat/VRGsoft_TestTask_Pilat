@@ -21,7 +21,7 @@
                                 <rect key="frame" x="16" y="144" width="361" height="552"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="tsn-Vl-oX3" customClass="NewsTableViewCell" customModule="VRGsoft_TestTask_Pilat" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MainCell" id="tsn-Vl-oX3" customClass="NewsTableViewCell" customModule="VRGsoft_TestTask_Pilat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="361" height="169"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tsn-Vl-oX3" id="r6a-e4-lZn">
@@ -41,6 +41,9 @@
                                                     <rect key="frame" x="310" y="4" width="47" height="35"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" image="bookmark" catalog="system" title=""/>
+                                                    <connections>
+                                                        <action selector="onSaveButtonTapped:" destination="tsn-Vl-oX3" eventType="touchUpInside" id="upD-qP-9Xh"/>
+                                                    </connections>
                                                 </button>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="0pe-sd-pPG">
                                                     <rect key="frame" x="16" y="31" width="300" height="1"/>
@@ -74,6 +77,12 @@
                                                 <constraint firstAttribute="bottom" secondItem="yoA-am-lBP" secondAttribute="bottom" constant="10" id="uBi-la-dg9"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="articleImage" destination="yoA-am-lBP" id="Oje-uN-3nB"/>
+                                            <outlet property="articleText" destination="0pe-sd-pPG" id="BEr-Gz-xjB"/>
+                                            <outlet property="articleTitle" destination="4pl-Zv-Sbv" id="50t-PO-rPd"/>
+                                            <outlet property="saveButton" destination="A3V-zT-r03" id="jGO-BP-m4V"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -101,6 +110,9 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="magnifyingglass" catalog="system"/>
+                                <connections>
+                                    <action selector="onSearchButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5R5-mp-hDu"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -120,6 +132,10 @@
                             <constraint firstItem="d0F-HW-uAU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="tZ9-Yg-61U"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="searchField" destination="RVC-5i-eWa" id="RYn-BW-mzY"/>
+                        <outlet property="tableView" destination="d0F-HW-uAU" id="nYb-yz-5zx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -137,7 +153,7 @@
                                 <rect key="frame" x="16" y="150" width="361" height="547"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Ncc-JM-jFk" customClass="NewsTableViewCell" customModule="VRGsoft_TestTask_Pilat" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" id="Ncc-JM-jFk" customClass="NewsTableViewCell" customModule="VRGsoft_TestTask_Pilat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="361" height="169"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ncc-JM-jFk" id="dzc-GM-3Wt">
@@ -247,7 +263,7 @@
                                 <rect key="frame" x="16" y="73" width="361" height="624"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="qC8-mB-qCE" customClass="NewsTableViewCell" customModule="VRGsoft_TestTask_Pilat" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FavoriteCell" id="qC8-mB-qCE" customClass="NewsTableViewCell" customModule="VRGsoft_TestTask_Pilat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="361" height="169"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qC8-mB-qCE" id="cvC-wm-a2M">

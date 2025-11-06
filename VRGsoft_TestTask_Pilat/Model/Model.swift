@@ -14,6 +14,7 @@ enum Model{
         var text: String
         var imageURL: URL?
         var isFavorite: Bool = false
+        var sourceName: String
     }
     
     enum NewsCategory: String, CaseIterable {
@@ -22,8 +23,8 @@ enum Model{
 }
 
 protocol NewsService {
-    func getNews(page: Int) async throws -> [Model.NewsArticle]
-    func getNewsByCategory(category: Model.NewsCategory, page: Int) async throws -> [Model.NewsArticle]
+    func getNews(page: Int, search: String?) async throws -> [Model.NewsArticle]
+    func getNewsByCategory(category: Model.NewsCategory?, page: Int) async throws -> [Model.NewsArticle]
     func addToFavorites(article: Model.NewsArticle) async throws
     func removeFromFavorites(article: Model.NewsArticle) async throws
     func getFavorites() async throws -> [Model.NewsArticle]
