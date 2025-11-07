@@ -22,11 +22,15 @@ class NewsTableViewCell: UITableViewCell {
     
     private var article: Model.NewsArticle?
     weak var delegate: ArticleCellDelegate?
+    private var isToggling = false
     
     override func prepareForReuse() {
         super.prepareForReuse()
         article = nil
-        saveButton.setImage(nil, for: .normal)
+        articleTitle.text = nil
+        articleText.text = nil
+        articleImage.image = nil
+        saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
         updateBookmark()
     }
         
@@ -57,8 +61,16 @@ class NewsTableViewCell: UITableViewCell {
     
     @IBAction func onSaveButtonTapped(_ sender: Any) {
         guard let article else {return}
-        //self.article?.isFavorite.toggle()
+        isToggling = true
+        saveButton.isEnabled = false
+        
+        self.article?.isFavorite.toggle()
+        updateBookmark()
         delegate?.didToggleFavorite(article: article)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.isToggling = false
+            self.saveButton.isEnabled = true
+        }
     }
     
     override func awakeFromNib() {
@@ -73,8 +85,7 @@ class NewsTableViewCell: UITableViewCell {
 //    }
     
     private func updateBookmark(){
-        guard let article else {return}
-        let imageName = article.isFavorite ? "bookmark.fill" : "bookmark"
+        let imageName = (article?.isFavorite == true) ? "bookmark.fill" : "bookmark"
         saveButton.setImage(UIImage(systemName: imageName), for: .normal)
     }
 

@@ -214,6 +214,9 @@
                                     </children>
                                 </menu>
                                 <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="categoryControllerTapped:" destination="jUK-py-a7e" eventType="touchUpInside" id="ObC-Gm-8IC"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hDk-7b-PJ6"/>
@@ -228,6 +231,10 @@
                             <constraint firstItem="hDk-7b-PJ6" firstAttribute="bottom" secondItem="1m3-hQ-hEU" secondAttribute="bottom" constant="16" id="n6y-GV-5Kg"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="categoryControlIotlet" destination="FIX-RY-wiP" id="kfP-3q-WMi"/>
+                        <outlet property="tableView" destination="1m3-hQ-hEU" id="P8G-mx-J50"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q4h-aT-5bQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -10,6 +10,9 @@ import UIKit
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ArticleCellDelegate {
     
     private var news: [Model.NewsArticle] = []
+    private var currentPage: Int = 1
+    private var currentSearch: String? = nil
+    private var isLoading = false
     
     func didToggleFavorite(article: Model.NewsArticle) {
         Task {
@@ -45,6 +48,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == news.count - 1 && !isLoading {
+            loadMoreNews()
+        }
+    }
+    
 
     @IBOutlet private weak var searchField: UITextField!
     @IBOutlet private weak var tableView: UITableView!
@@ -54,6 +63,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         guard let query = searchField.text, !query.isEmpty else { return }
         Task {
             do {
+                currentSearch = query
+                currentPage = 1
                 let results = try await NewsRepo.shared.getNews(page: 1, search: query)
                 self.news = results
                 DispatchQueue.main.async {
@@ -78,34 +89,94 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 160
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(refreshNews),
-            name: .favoritesDidChange,
-            object: nil
-        )
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(refreshNews),
+//                                               name: .favoritesDidChange,
+//                                               object: nil)
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
         // Do any additional setup after loading the view.
     }
     
-    @objc private func refreshNews() {
+//    @objc private func refreshNews() {
+//        Task {
+//            do {
+//                let favoriteArticles = try await NewsRepo.shared.getFavorites()
+//                let favoritesIds = Set(favoriteArticles.map { $0.id })
+//                var changedIndexPaths: [IndexPath] = []
+//                for i in 0..<news.count {
+//                    let wasFavorite = news[i].isFavorite
+//                    news[i].isFavorite = favoritesIds.contains(news[i].id)
+//                    if news[i].isFavorite != wasFavorite {
+//                        changedIndexPaths.append(IndexPath(row: i, section: 0))
+//                    }
+//                }
+//                await MainActor.run {
+//                    if !changedIndexPaths.isEmpty {
+//                        self.tableView.reloadRows(at: changedIndexPaths, with: .none)
+//                    }
+//                }
+//            } catch {
+//                print("Помилка оновлення favorites: (error)")
+//            }
+//        }
+//    }
+    
+    @objc private func pullToRefresh() {
         Task {
             do {
-                self.news = try await NewsRepo.shared.getNews(page: 1, search: nil)
-                await MainActor.run { self.tableView.reloadData() }
+                currentPage = 1
+                let results = try await NewsRepo.shared.getNews(page: currentPage, search: currentSearch)
+                self.news = results
+                await MainActor.run {
+                    self.tableView.reloadData()
+                    self.tableView.refreshControl?.endRefreshing()
+                }
             } catch {
-                print("Помилка: \(error)")
+                print("Помилка pull-to-refresh: (error)")
+                await MainActor.run {
+                    self.tableView.refreshControl?.endRefreshing()
+                }
             }
         }
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         Task {
             do {
+                self.currentPage = 1
                 self.news = try await NewsRepo.shared.getNews(page: 1, search: nil)
                 await MainActor.run { self.tableView.reloadData() }
+                
             } catch {
                 print("Помилка завантаження: \(error)")
             }
+                
+        }
+    }
+    
+    private func loadMoreNews() {
+        isLoading = true
+        Task {
+            do {
+                currentPage += 1
+                let newResults = try await NewsRepo.shared.getNews(page: currentPage, search: currentSearch)
+                if !newResults.isEmpty {
+                    let startIndex = self.news.count
+                    self.news += newResults
+                    await MainActor.run {
+                        let indexPaths = (startIndex..<self.news.count).map { IndexPath(row: $0, section: 0) }
+                        self.tableView.insertRows(at: indexPaths, with: .automatic)
+                    }
+                }
+            } catch {
+                print("Помилка завантаження наступної сторінки: (error)")
+                currentPage -= 1
+            }
+            isLoading = false
         }
     }
 

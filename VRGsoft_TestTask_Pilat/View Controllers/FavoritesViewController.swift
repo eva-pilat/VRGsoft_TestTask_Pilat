@@ -53,6 +53,14 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.delegate = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 160
+        
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(loadFavorites),
+//                                               name: .favoritesDidChange,
+//                                               object: nil)
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
         // Do any additional setup after loading the view.
     }
     
@@ -61,7 +69,7 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
         loadFavorites()
     }
     
-    private func loadFavorites() {
+    @objc private func loadFavorites() {
         Task {
             do {
                 self.favorites = try await NewsRepo.shared.getFavorites()
@@ -70,6 +78,24 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
                 }
             } catch {
                 print("Помилка завантаження улюблених: \(error)")
+            }
+        }
+    }
+    
+    @objc private func pullToRefresh() {
+        Task {
+            do {
+                let results = try await NewsRepo.shared.getFavorites()
+                self.favorites = results
+                await MainActor.run {
+                    self.tableView.reloadData()
+                    self.tableView.refreshControl?.endRefreshing()
+                }
+            } catch {
+                print("Помилка pull-to-refresh: (error)")
+                await MainActor.run {
+                    self.tableView.refreshControl?.endRefreshing()
+                }
             }
         }
     }
