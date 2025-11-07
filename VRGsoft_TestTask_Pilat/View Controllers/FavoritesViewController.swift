@@ -21,10 +21,18 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
             }
             
             if let index = favorites.firstIndex(where: { $0.id == updated.id }) {
-                favorites[index] = updated
-                await MainActor.run {
-                    let indexPath = IndexPath(row: index, section: 0)
-                    tableView.reloadRows(at: [indexPath], with: .none)
+                if !updated.isFavorite {
+                    favorites.remove(at: index)
+                    await MainActor.run {
+                        let indexPath = IndexPath(row: index, section: 0)
+                        tableView.deleteRows(at: [indexPath], with: .automatic)
+                    }
+                } else {
+                    favorites[index] = updated
+                    await MainActor.run {
+                        let indexPath = IndexPath(row: index, section: 0)
+                        tableView.reloadRows(at: [indexPath], with: .none)
+                    }
                 }
             }
                     

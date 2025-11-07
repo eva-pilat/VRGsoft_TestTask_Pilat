@@ -31,6 +31,7 @@ class NewsTableViewCell: UITableViewCell {
         articleText.text = nil
         articleImage.image = nil
         saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        saveButton.tintColor = .label
         updateBookmark()
     }
         
@@ -85,8 +86,10 @@ class NewsTableViewCell: UITableViewCell {
 //    }
     
     private func updateBookmark(){
-        let imageName = (article?.isFavorite == true) ? "bookmark.fill" : "bookmark"
+        guard let article else { return }
+        let imageName = (article.isFavorite == true) ? "bookmark.fill" : "bookmark"
         saveButton.setImage(UIImage(systemName: imageName), for: .normal)
+        saveButton.tintColor = .label
     }
 
 }

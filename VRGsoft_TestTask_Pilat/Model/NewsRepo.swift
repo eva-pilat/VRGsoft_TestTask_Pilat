@@ -64,13 +64,15 @@ final class NewsRepo: NewsService {
         let request = NetworkRequest(url: url, parameters: parameters)
         
         let response: NewsAPIResponse = try await networkLayer.request(request)
+        let favorites: Set<String> = try await dbLayer.getFavoritesId()
      
         return response.articles.map { apiArticle in
+            let isFav = favorites.contains(apiArticle.url)
             return Model.NewsArticle(id: apiArticle.url,
                                      title: apiArticle.title,
                                      text: apiArticle.description ?? "",
                                      imageURL: URL(string: apiArticle.urlToImage ?? ""),
-                                     isFavorite: false,
+                                     isFavorite: isFav,
                                      sourceName: apiArticle.source.name ?? "")
         }
     }
