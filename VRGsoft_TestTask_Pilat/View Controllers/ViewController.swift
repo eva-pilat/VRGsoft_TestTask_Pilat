@@ -32,8 +32,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     tableView.reloadRows(at: [indexPath], with: .none)
                 }
             }
-            
-            NotificationCenter.default.post(name: .favoritesDidChange, object: nil)
         }
     }
     
@@ -89,40 +87,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 160
         
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(refreshNews),
-//                                               name: .favoritesDidChange,
-//                                               object: nil)
-        
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
         // Do any additional setup after loading the view.
     }
-    
-//    @objc private func refreshNews() {
-//        Task {
-//            do {
-//                let favoriteArticles = try await NewsRepo.shared.getFavorites()
-//                let favoritesIds = Set(favoriteArticles.map { $0.id })
-//                var changedIndexPaths: [IndexPath] = []
-//                for i in 0..<news.count {
-//                    let wasFavorite = news[i].isFavorite
-//                    news[i].isFavorite = favoritesIds.contains(news[i].id)
-//                    if news[i].isFavorite != wasFavorite {
-//                        changedIndexPaths.append(IndexPath(row: i, section: 0))
-//                    }
-//                }
-//                await MainActor.run {
-//                    if !changedIndexPaths.isEmpty {
-//                        self.tableView.reloadRows(at: changedIndexPaths, with: .none)
-//                    }
-//                }
-//            } catch {
-//                print("Помилка оновлення favorites: (error)")
-//            }
-//        }
-//    }
     
     @objc private func pullToRefresh() {
         Task {

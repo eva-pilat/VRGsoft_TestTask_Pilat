@@ -35,8 +35,6 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
                     }
                 }
             }
-                    
-            NotificationCenter.default.post(name: .favoritesDidChange, object: nil)
         }
     }
     
@@ -61,11 +59,7 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.delegate = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 160
-        
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(loadFavorites),
-//                                               name: .favoritesDidChange,
-//                                               object: nil)
+
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.refreshControl = refreshControl

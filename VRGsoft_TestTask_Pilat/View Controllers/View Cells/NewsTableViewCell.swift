@@ -32,7 +32,6 @@ class NewsTableViewCell: UITableViewCell {
         articleImage.image = nil
         saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
         saveButton.tintColor = .label
-        updateBookmark()
     }
         
     override func layoutSubviews() {
@@ -76,6 +75,7 @@ class NewsTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        saveButton.tintColor = .label
         // Initialization code
     }
 

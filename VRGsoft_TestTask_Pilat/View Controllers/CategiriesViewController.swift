@@ -42,7 +42,6 @@ class CategiriesViewController: UIViewController, UITableViewDataSource, UITable
                     tableView.reloadRows(at: [indexPath], with: .none)
                 }
             }
-            NotificationCenter.default.post(name: .favoritesDidChange, object: nil)
         }
     }
     
