@@ -104,7 +104,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     self.tableView.refreshControl?.endRefreshing()
                 }
             } catch {
-                print("Помилка pull-to-refresh: (error)")
+                print("Помилка pull-to-refresh")
                 await MainActor.run {
                     self.tableView.refreshControl?.endRefreshing()
                 }
@@ -142,7 +142,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     }
                 }
             } catch {
-                print("Помилка завантаження наступної сторінки: (error)")
+                print("Помилка завантаження наступної сторінки")
                 currentPage -= 1
             }
             isLoading = false

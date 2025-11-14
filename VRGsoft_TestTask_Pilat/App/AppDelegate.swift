@@ -78,8 +78,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
-
-//extension Notification.Name {
-//    static let favoritesDidChange = Notification.Name("favoritesDidChange")
-//}
-

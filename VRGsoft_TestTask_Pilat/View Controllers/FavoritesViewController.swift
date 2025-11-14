@@ -94,7 +94,7 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
                     self.tableView.refreshControl?.endRefreshing()
                 }
             } catch {
-                print("Помилка pull-to-refresh: (error)")
+                print("Помилка pull-to-refresh")
                 await MainActor.run {
                     self.tableView.refreshControl?.endRefreshing()
                 }

@@ -64,7 +64,7 @@ final class CoreDataDBService: DBService {
                                   title: article.title ?? "Без назви",
                                   text: article.text ?? "",
                                   imageURL: URL(string: article.imageURL ?? ""),
-                                  isFavorite: true, // ← важливо!
+                                  isFavorite: true,
                                   sourceName: article.sourceName ?? "Невідоме джерело")
             }
         }
