@@ -50,20 +50,33 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
 
-    @IBOutlet weak var tableView: UITableView!
+    private var tableView = UITableView()
     private var favorites: [Model.NewsArticle] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 160
 
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
+        setupTableView()
         // Do any additional setup after loading the view.
+    }
+    
+    private func setupTableView(){
+        view.addSubview(tableView)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 300
+        tableView.register(NewsTableViewCell.self, forCellReuseIdentifier: "NewsCell")
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,16 +114,5 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
             }
         }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

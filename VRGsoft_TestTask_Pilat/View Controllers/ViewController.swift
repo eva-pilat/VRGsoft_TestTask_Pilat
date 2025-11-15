@@ -9,10 +9,54 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ArticleCellDelegate {
     
+    private var searchField = UITextField()
+    private var searchButton = UIButton()
+    private var tableView = UITableView()
+    
     private var news: [Model.NewsArticle] = []
     private var currentPage: Int = 1
     private var currentSearch: String? = nil
     private var isLoading = false
+    
+    private func setupSearch(){
+        view.addSubview(searchField)
+        view.addSubview(searchButton)
+        
+        searchButton.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        searchButton.addTarget(self, action: #selector(onSearchButtonTapped(_:)), for: .touchUpInside)
+        
+        searchField.placeholder = "Search"
+        searchField.borderStyle = .roundedRect
+        searchField.translatesAutoresizingMaskIntoConstraints = false
+        searchButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            searchField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            searchField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            searchField.trailingAnchor.constraint(equalTo: searchButton.leadingAnchor, constant: -8),
+            searchField.heightAnchor.constraint(equalToConstant: 30),
+            
+            searchButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            searchButton.centerYAnchor.constraint(equalTo: searchField.centerYAnchor),
+            searchButton.widthAnchor.constraint(equalToConstant: 44),
+            searchButton.heightAnchor.constraint(equalToConstant: 44)
+        ])
+    }
+    
+    private func setupTableView(){
+        view.addSubview(tableView)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 300
+        tableView.register(NewsTableViewCell.self, forCellReuseIdentifier: "NewsCell")
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 16),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
     
     func didToggleFavorite(article: Model.NewsArticle) {
         Task {
@@ -52,12 +96,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-
-    @IBOutlet private weak var searchField: UITextField!
-    @IBOutlet private weak var tableView: UITableView!
-    
-    
-    @IBAction func onSearchButtonTapped(_ sender: Any) {
+    @objc func onSearchButtonTapped(_ sender: Any) {
         guard let query = searchField.text, !query.isEmpty else { return }
         Task {
             do {
@@ -81,15 +120,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
-        tableView.delegate = self
-        
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 160
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
+        
+        setupSearch()
+        setupTableView()
         // Do any additional setup after loading the view.
     }
     
@@ -151,3 +188,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
 }
 
+#if DEBUG
+import SwiftUI
+
+struct MyViewController_Previews: PreviewProvider {
+    static var previews: some View {
+        ViewController().showPreview()
+    }
+}
+
+extension UIViewController {
+    private struct Preview: UIViewControllerRepresentable {
+        let viewController: UIViewController
+        
+        func makeUIViewController(context: Context) -> UIViewController {
+            return viewController
+        }
+        
+        func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+    }
+    
+    func showPreview() -> some View {
+        Preview(viewController: self)
+    }
+}
+#endif

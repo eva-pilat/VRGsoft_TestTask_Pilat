@@ -45,8 +45,8 @@ class CategiriesViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var categoryControlIotlet: UIButton!
+    private var tableView = UITableView()
+    private var categoryControlButton = UIButton(type: .system)
     
     
     private var news: [Model.NewsArticle] = []
@@ -62,14 +62,14 @@ class CategiriesViewController: UIViewController, UITableViewDataSource, UITable
                 }
             }
         }
-        categoryControlIotlet.menu = UIMenu(title: "Choose Category", children: actions)
+        categoryControlButton.menu = UIMenu(title: "Choose Category", children: actions)
     }
     
     func selectCategory(_ category: Model.NewsCategory) async {
         do {
             selectedCategory = category
             await MainActor.run {
-                self.categoryControlIotlet.setTitle(category.rawValue, for: .normal)
+                self.categoryControlButton.setTitle(category.rawValue, for: .normal)
                 self.updateMenu(selected: category.rawValue)
             }
             news = try await NewsRepo.shared.getNewsByCategory(category: category, page: 1)
@@ -81,17 +81,47 @@ class CategiriesViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    private func setupTableView() {
+        view.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
         
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 160
-
-        categoryControlIotlet.showsMenuAsPrimaryAction = true
+        tableView.estimatedRowHeight = 300
+        
+        tableView.register(NewsTableViewCell.self, forCellReuseIdentifier: "NewsCell")
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: categoryControlButton.bottomAnchor, constant: 16),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+    
+    private func setupCategoryControl() {
+        view.addSubview(categoryControlButton)
+        categoryControlButton.translatesAutoresizingMaskIntoConstraints = false
+        categoryControlButton.showsMenuAsPrimaryAction = true
+        
+        categoryControlButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        
         updateMenu(selected: Model.NewsCategory.general.rawValue)
-        categoryControlIotlet.setTitle(Model.NewsCategory.general.rawValue, for: .normal)
+        categoryControlButton.setTitle(Model.NewsCategory.general.rawValue, for: .normal)
+        
+        NSLayoutConstraint.activate([
+            categoryControlButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            categoryControlButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            categoryControlButton.heightAnchor.constraint(equalToConstant: 30)
+        ])
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupCategoryControl()
+        setupTableView()
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
@@ -150,7 +180,7 @@ class CategiriesViewController: UIViewController, UITableViewDataSource, UITable
                     self.tableView.reloadData()
                     if let selected = self.selectedCategory?.rawValue {
                         self.updateMenu(selected: selected)
-                        self.categoryControlIotlet.setTitle(selected, for: .normal)
+                        self.categoryControlButton.setTitle(selected, for: .normal)
                     }
                 }
             } catch {
@@ -158,16 +188,5 @@ class CategiriesViewController: UIViewController, UITableViewDataSource, UITable
             }
         }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

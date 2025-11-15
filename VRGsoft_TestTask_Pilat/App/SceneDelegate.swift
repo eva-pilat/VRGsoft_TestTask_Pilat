@@ -18,15 +18,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        window.windowScene = windowScene
+        
         let tabBarController = UITabBarController()
-        let newsVC = storyboard.instantiateViewController(withIdentifier: "NewsVC") as! ViewController
+        let newsVC = ViewController()
         newsVC.tabBarItem = UITabBarItem(title: "News", image: UIImage(systemName: "newspaper"), tag: 0)
 
-        let favoritesVC = storyboard.instantiateViewController(withIdentifier: "FavoritesVC") as! FavoritesViewController
+        let favoritesVC = FavoritesViewController()
         favoritesVC.tabBarItem = UITabBarItem(title: "Favorites", image: UIImage(systemName: "bookmark"), tag: 1)
 
-        let categoriesVC = storyboard.instantiateViewController(withIdentifier: "CategoriesVC") as! CategiriesViewController
+        let categoriesVC = CategiriesViewController()
         categoriesVC.tabBarItem = UITabBarItem(title: "Categories", image: UIImage(systemName: "list.bullet"), tag: 2)
         
         tabBarController.viewControllers = [
